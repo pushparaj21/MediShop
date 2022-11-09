@@ -14,13 +14,23 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {SafeAreaView} from 'react-native';
 import Flex from './Screen/Test';
-
+const Stack = createNativeStackNavigator();
 const App = () => {
   return (
-    <SafeAreaView>
-      {/* <Register /> */}
-      <Flex />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Registers"
+          component={Register}
+          options={{title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{title: 'Welcome'}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 export default App;
