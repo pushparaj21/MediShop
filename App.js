@@ -20,14 +20,14 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Registers"
-          component={Register}
-          options={{title: 'Welcome'}}
-        />
-        <Stack.Screen
           name="Login"
           component={Login}
           options={{title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{title: 'Register'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

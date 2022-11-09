@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-export default function Register() {
+export default function Register({navigation}) {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.register}>

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
     <View style={style.mainContainer}>
       <View style={style.loginSection}>
@@ -20,6 +20,7 @@ const Login = () => {
         />
         <TextInput
           placeholder="enter your password"
+          secureTextEntry={true}
           placeholderTextColor="white"
           underlineColorAndroid="#f000"
           style={style.textinput}
@@ -28,7 +29,11 @@ const Login = () => {
         <TouchableOpacity activeOpacity={0.5} style={style.button}>
           <Text style={style.buttonText}>LOGIN</Text>
         </TouchableOpacity>
-        <Text style={style.registerTextStyle}>New Here ? Register</Text>
+        <Text
+          style={style.registerTextStyle}
+          onPress={() => navigation.navigate('Register')}>
+          New Here ? Register
+        </Text>
       </View>
     </View>
   );
