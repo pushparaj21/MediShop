@@ -7,27 +7,46 @@
  */
 import Login from './Screen/Login';
 import Register from './Screen/Register';
+import Splash from './Screen/Splash';
+import DrowerNavigatorRoutes from './Screen/DrawerNavigatorRoutes';
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {SafeAreaView} from 'react-native';
-import Flex from './Screen/Test';
+import {SafeAreaView, View} from 'react-native';
+
 const Stack = createNativeStackNavigator();
+const Auth = () => {
+  return (
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{title: 'Welcome'}}
+      />
+      <Stack.Screen
+        name="Register1"
+        component={Register}
+        options={{title: 'Register'}}
+      />
+    </Stack.Navigator>
+  );
+};
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{title: 'Welcome'}}
+          name="Splash"
+          component={Splash}
+          options={{title: 'splash'}}
         />
+        <Stack.Screen name="Auth" component={Auth} options={{title: 'auth'}} />
         <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{title: 'Register'}}
+          name="DrawerNavigatorRoutes"
+          component={DrowerNavigatorRoutes}
+          options={{title: 'DrowerNavigatorRoutes'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
