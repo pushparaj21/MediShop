@@ -1,10 +1,32 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-const DrowerNavigatorRoutes = () => {
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+function Feed() {
   return (
-    <View>
-      <Text>navitaon</Text>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Feed Screen</Text>
     </View>
   );
-};
+}
+
+function Article() {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>Article Screen</Text>
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+function DrowerNavigatorRoutes() {
+  return (
+    <Drawer.Navigator useLegacyImplementation>
+      <Drawer.Screen name="Feed" component={Feed} />
+      <Drawer.Screen name="Article" component={Article} />
+    </Drawer.Navigator>
+  );
+}
 export default DrowerNavigatorRoutes;

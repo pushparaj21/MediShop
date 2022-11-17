@@ -26,7 +26,7 @@ const Auth = () => {
         options={{title: 'Welcome'}}
       />
       <Stack.Screen
-        name="Register1"
+        name="Register"
         component={Register}
         options={{title: 'Register'}}
       />
@@ -40,13 +40,19 @@ const App = () => {
         <Stack.Screen
           name="Splash"
           component={Splash}
-          options={{title: 'splash'}}
+          // options={{title: 'splash'}}
+          options={{headerShown: false}}
         />
-        <Stack.Screen name="Auth" component={Auth} options={{title: 'auth'}} />
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="DrawerNavigatorRoutes"
           component={DrowerNavigatorRoutes}
-          options={{title: 'DrowerNavigatorRoutes'}}
+          // options={{title: 'DrowerNavigatorRoutes'}}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
