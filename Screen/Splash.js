@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, ActivityIndicator} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FlipInEasyX} from 'react-native-reanimated';
+import {auth} from '../firebase/firebase-config';
 
 const Splash = ({navigation}) => {
   const [animating, setAnimating] = useState(true);
