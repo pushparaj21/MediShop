@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, ActivityIndicator} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FlipInEasyX} from 'react-native-reanimated';
 import {auth} from '../firebase/firebase-config';
 
@@ -9,13 +8,10 @@ const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(async () => {
       setAnimating(false);
-      try {
-        const value = await AsyncStorage.getItem('useri3d');
-        navigation.replace(value != null ? 'DrawerNavigatorRoutes' : 'Auth');
-      } catch (e) {
-        console.log(e);
-      }
-    }, 3000);
+      navigation.replace(
+        auth.currentUser != null ? 'DrawerNavigatorRoutes' : 'Auth',
+      );
+    }, 1000);
   });
   return (
     <View style={styles.main}>

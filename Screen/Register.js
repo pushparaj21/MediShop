@@ -1,76 +1,183 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
-  Text,
-  View,
+  SafeAreaView,
   StyleSheet,
   TextInput,
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Keyboard,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-export default function Register({navigation}) {
+
+import {auth} from '../firebase/firebase-config';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+const RegisterScreen = ({navigation}) => {
+  const [userEmail, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [passward, setPassword] = useState('');
+  const [errortext, setErrortext] = useState('');
+  const signInUser = () => {
+    if (!userName) {
+      alert('Please fill Name');
+      return;
+    }
+    if (!userEmail) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!passward) {
+      alert('Please fill Password');
+      return;
+    }
+    createUserWithEmailAndPassword(auth, userEmail, passward)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+
+        navigation.replace('DrawerNavigatorRoutes');
+
+        // ...
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          setErrortext('That email address is already in use!');
+        } else {
+          setErrortext(error.message);
+        }
+        // ..
+      });
+  };
+
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.register}>
-        <Text style={{color: 'pink'}}>Register</Text>
-        <TextInput
-          placeholder="Enter Name"
-          placeholderTextColor="white"
-          underlineColorAndroid="#f000"
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder="Enter Email"
-          placeholderTextColor="white"
-          underlineColorAndroid="#f000"
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder="Enter Age"
-          placeholderTextColor="white"
-          underlineColorAndroid="#f000"
-          style={styles.textInput}
-        />
-        <TextInput
-          placeholder="Enter Address"
-          placeholderTextColor="white"
-          underlineColorAndroid="#f000"
-          style={styles.textInput}
-        />
-        <TouchableOpacity activeOpacity={0.5} style={styles.button}>
-          <Text style={styles.buttonText}>REGISTER</Text>
-        </TouchableOpacity>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#307ecc'}}>
+      <View style={styles.mainBody}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          // eslint-disable-next-line react-native/no-inline-styles
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: 'center',
+            alignContent: 'center',
+          }}>
+          <KeyboardAvoidingView enabled>
+            <View style={styles.SectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={UserName => setUserName(UserName)}
+                placeholder="Enter Name" //dummy@abc.com
+                placeholderTextColor="#8b9cb5"
+                autoCapitalize="none"
+                returnKeyType="next"
+                underlineColorAndroid="#f000"
+                blurOnSubmit={false}
+              />
+            </View>
+            <View style={styles.SectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={UserEmail => setEmail(UserEmail)}
+                placeholder="Enter Email" //dummy@abc.com
+                placeholderTextColor="#8b9cb5"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                returnKeyType="next"
+                underlineColorAndroid="#f000"
+                blurOnSubmit={false}
+              />
+            </View>
+
+            <View style={styles.SectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={UserPassword => setPassword(UserPassword)}
+                placeholder="Enter Password" //12345
+                placeholderTextColor="#8b9cb5"
+                keyboardType="default"
+                onSubmitEditing={Keyboard.dismiss}
+                blurOnSubmit={false}
+                secureTextEntry={true}
+                underlineColorAndroid="#f000"
+                returnKeyType="next"
+              />
+            </View>
+            {errortext != '' ? (
+              <Text style={styles.errorTextStyle}>{errortext}</Text>
+            ) : null}
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              activeOpacity={0.5}
+              onPress={signInUser}>
+              <Text style={styles.buttonTextStyle}>LOGIN</Text>
+            </TouchableOpacity>
+            <Text
+              style={styles.registerTextStyle}
+              onPress={() => navigation.navigate('Register')}>
+              New Here ? Register
+            </Text>
+          </KeyboardAvoidingView>
+        </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
-}
+};
+export default RegisterScreen;
+
 const styles = StyleSheet.create({
-  mainContainer: {
+  mainBody: {
+    flex: 1,
+    justifyContent: 'center',
     backgroundColor: '#307ecc',
-    display: 'flex',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignContent: 'center',
   },
-  register: {
-    width: '80%',
-  },
-  textInput: {
-    borderColor: '#FFFFFF',
-    borderWidth: 1,
-    height: 35,
-    margin: 10,
-    borderRadius: 15,
-    paddingLeft: 15,
-    paddingTop: 10,
-  },
-  button: {
-    backgroundColor: '#7de24e',
-    height: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
+  SectionStyle: {
+    flexDirection: 'row',
+    height: 40,
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
     margin: 10,
   },
-  buttonText: {
+  buttonStyle: {
+    backgroundColor: '#7DE24E',
+    borderWidth: 0,
     color: '#FFFFFF',
+    borderColor: '#7DE24E',
+    height: 40,
+    alignItems: 'center',
+    borderRadius: 30,
+    marginLeft: 35,
+    marginRight: 35,
+    marginTop: 20,
+    marginBottom: 25,
+  },
+  buttonTextStyle: {
+    color: '#FFFFFF',
+    paddingVertical: 10,
+    fontSize: 16,
+  },
+  inputStyle: {
+    flex: 1,
+    color: 'white',
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderWidth: 1,
+    borderRadius: 30,
+    borderColor: '#dadae8',
+  },
+  registerTextStyle: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 14,
+    alignSelf: 'center',
+    padding: 10,
+  },
+  errorTextStyle: {
+    color: 'red',
+    textAlign: 'center',
+    fontSize: 14,
   },
 });
