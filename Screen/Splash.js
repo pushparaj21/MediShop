@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, ActivityIndicator} from 'react-native';
+import {Text, Image, View, StyleSheet, ActivityIndicator} from 'react-native';
 import {FlipInEasyX} from 'react-native-reanimated';
 import {auth} from '../firebase/firebase-config';
 
@@ -15,7 +15,10 @@ const Splash = ({navigation}) => {
   });
   return (
     <View style={styles.main}>
-      <Text style={styles.tt}>hi shivam</Text>
+      <Image
+        source={require('../Image/cabno.png')}
+        style={{width: '90%', resizeMode: 'contain', margin: 30}}
+      />
 
       <ActivityIndicator size="large" color="#00ff00" animating={animating} />
     </View>
