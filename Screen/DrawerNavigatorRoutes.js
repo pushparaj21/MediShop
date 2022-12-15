@@ -2,23 +2,10 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {signOut} from 'firebase/auth';
 import {auth} from '../firebase/firebase-config';
-
+import List from './DrawerScreens/ListPage';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-function Feed() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Feed Screen</Text>
-    </View>
-  );
-}
-
-function Article() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Article Screen</Text>
-    </View>
-  );
-}
+import Register from './DrawerScreens/RegisterShop';
+import Chats from './DrawerScreens/Chats';
 function Logout({navigation}) {
   const signout = () => {
     signOut(auth)
@@ -49,8 +36,9 @@ const Drawer = createDrawerNavigator();
 function DrowerNavigatorRoutes() {
   return (
     <Drawer.Navigator useLegacyImplementation>
-      <Drawer.Screen name="Feed" component={Feed} />
-      <Drawer.Screen name="Article" component={Article} />
+      <Drawer.Screen name="List" component={List} />
+      <Drawer.Screen name="Chats" component={Chats} />
+      <Drawer.Screen name="Register shop" component={Register} />
       <Drawer.Screen name="Logout" component={Logout} />
     </Drawer.Navigator>
   );
