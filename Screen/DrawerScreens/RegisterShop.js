@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
+import {collection, addDoc, setDoc, doc} from 'firebase/firestore';
+import {db} from '../../firebase/firebase-config';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -16,8 +18,26 @@ export default function Register() {
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [contact, setContact] = useState();
-  const signInUser = () => {
+  const registerUser = () => {
     console.log(`${latitude}  ${longitude}  ${contact}  ${name} ,${shopName}`);
+    fetch('http://192.168.100.37:3000/', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: `${name}`,
+        shopname: `${shopName}`,
+        _id: contact,
+        lat: latitude,
+        lon: longitude,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(e => console.log(e));
+    console.log('the end of send');
   };
   Geolocation.getCurrentPosition(data => {
     setLatitude(data.coords.latitude);
@@ -81,7 +101,7 @@ export default function Register() {
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.5}
-            onPress={signInUser}>
+            onPress={registerUser}>
             <Text style={styles.buttonTextStyle}>Register Shop</Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
