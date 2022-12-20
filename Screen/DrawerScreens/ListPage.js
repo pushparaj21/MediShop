@@ -127,7 +127,7 @@ export default function List() {
     console.log('it is a lIstpage');
     if (latitude && longitude) {
       console.log(latitude);
-      fetch('http://172.16.140.71:3000/stores', {
+      fetch('http://192.168.43.94:3000/stores', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -18,8 +18,19 @@ export default function Register() {
   const [longitude, setLongitude] = useState();
   const [contact, setContact] = useState();
   const registerUser = () => {
+    if (!name) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!shopName) {
+      alert('Please fill Password');
+      return;
+    }
+    if (!contact) {
+      alert('Please fill Contact No');
+    }
     console.log(`${latitude}  ${longitude}  ${contact}  ${name} ,${shopName}`);
-    fetch('http://172.16.140.71:3000/', {
+    fetch('http://192.168.43.94:3000/', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -39,6 +50,8 @@ export default function Register() {
 
         console.log(data.msg);
         ToastAndroid.show(`${data.msg}`, ToastAndroid.SHORT);
+        setName('');
+        setContact('');
       })
       .catch(e => console.log(e));
     console.log('the end of send');
@@ -83,6 +96,7 @@ export default function Register() {
               blurOnSubmit={false}
               underlineColorAndroid="#f000"
               returnKeyType="next"
+              value={name}
             />
           </View>
           <View style={styles.SectionStyle}>
@@ -97,6 +111,7 @@ export default function Register() {
               underlineColorAndroid="#f000"
               returnKeyType="next"
               autoComplete="tel-national"
+              value={contact}
             />
           </View>
 
