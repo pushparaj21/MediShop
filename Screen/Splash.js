@@ -16,8 +16,8 @@ const Splash = ({navigation}) => {
   return (
     <View style={styles.main}>
       <Image
-        source={require('../Image/cabno.png')}
-        style={{width: '90%', resizeMode: 'contain', margin: 30}}
+        source={require('../Image/test.png')}
+        style={{width: '90%', resizeMode: 'contain', margin: 20}}
       />
 
       <ActivityIndicator size="large" color="#00ff00" animating={animating} />

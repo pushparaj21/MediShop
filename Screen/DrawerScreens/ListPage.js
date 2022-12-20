@@ -1,15 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  Button,
   TouchableOpacity,
-  StyleSheet,
   Image,
   Linking,
   FlatList,
 } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+
 const Card = ({shop}) => {
   return (
     <View
@@ -113,59 +113,49 @@ const Card = ({shop}) => {
     </View>
   );
 };
-const DATA = [
-  {
-    _id: 8840587225,
-    name: 'test',
-    shopname: 'medistore sai',
-    location: {type: 'Point', coordinates: [24.6344203, 83.0844243]},
-    __v: 0,
-  },
-  {
-    _id: 76544678244412,
-    name: 'testhhhuuyhhj',
-    shopname: 'ppoi',
-    location: {type: 'Point', coordinates: [24.6344203, 83.0844243]},
-    __v: 0,
-  },
-  {
-    _id: 765446782444125600,
-    name: 'testhhhuuyhhj',
-    shopname: 'ppoi',
-    location: {type: 'Point', coordinates: [24.6344105, 83.0844465]},
-    __v: 0,
-  },
-  {
-    _id: 9090909077,
-    name: 'opooo',
-    shopname: 'poii',
-    location: {type: 'Point', coordinates: [24.6344105, 83.0844465]},
-    __v: 0,
-  },
-  {
-    _id: 88,
-    name: 'ooooooo',
-    shopname: 'uuuu',
-    location: {type: 'Point', coordinates: [24.6344338, 83.084402]},
-    __v: 0,
-  },
-  {
-    _id: 77,
-    name: 'ooooooo',
-    shopname: 'uuuu',
-    location: {type: 'Point', coordinates: [24.6344338, 83.084402]},
-    __v: 0,
-  },
-];
 
 export default function List() {
+  const [DATA, setData] = useState();
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+  Geolocation.getCurrentPosition(data => {
+    setLatitude(data.coords.latitude);
+    setLongitude(data.coords.longitude);
+    console.warn(`latitude ${latitude} and longitude ${longitude}`);
+  });
+  useEffect(() => {
+    console.log('it is a lIstpage');
+    if (latitude && longitude) {
+      console.log(latitude);
+      fetch('http://172.16.140.71:3000/stores', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lat: latitude,
+          lon: longitude,
+        }),
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          // write code to handle response data received from fetch API
+          setData(responseJson);
+        })
+        .catch(error =>
+          // write code to handle error condition
+          console.log('hi'),
+        );
+    }
+  }, [latitude, longitude]);
   const renderItem = ({item}) => <Card shop={item} />;
   return (
     <View style={{backgroundColor: '#faad14', height: '100%'}}>
       <FlatList
         data={DATA}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
       />
     </View>
   );

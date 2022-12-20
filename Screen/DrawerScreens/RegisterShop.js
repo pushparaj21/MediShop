@@ -20,7 +20,7 @@ export default function Register() {
   const [contact, setContact] = useState();
   const registerUser = () => {
     console.log(`${latitude}  ${longitude}  ${contact}  ${name} ,${shopName}`);
-    fetch('http://192.168.100.37:3000/', {
+    fetch('http://172.16.140.71:3000/', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
