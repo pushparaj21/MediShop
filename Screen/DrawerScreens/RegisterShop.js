@@ -7,10 +7,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-import {collection, addDoc, setDoc, doc} from 'firebase/firestore';
-import {db} from '../../firebase/firebase-config';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -35,7 +34,12 @@ export default function Register() {
       }),
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data);
+
+        console.log(data.msg);
+        ToastAndroid.show(`${data.msg}`, ToastAndroid.SHORT);
+      })
       .catch(e => console.log(e));
     console.log('the end of send');
   };
@@ -65,7 +69,6 @@ export default function Register() {
               autoCapitalize="none"
               keyboardType="default"
               returnKeyType="next"
-              underlineColorAndroid="#f000"
               blurOnSubmit={false}
             />
           </View>
@@ -78,7 +81,6 @@ export default function Register() {
               keyboardType="default"
               // onSubmitEditing={Keyboard.dismiss}
               blurOnSubmit={false}
-              secureTextEntry={true}
               underlineColorAndroid="#f000"
               returnKeyType="next"
             />
@@ -89,12 +91,12 @@ export default function Register() {
               onChangeText={Contact => setContact(Contact)}
               placeholder="Contact No" //12345
               placeholderTextColor="#8b9cb5"
-              keyboardType="number"
-              // onSubmitEditing={Keyboard.dismiss}
+              keyboardType="numeric"
               blurOnSubmit={false}
-              secureTextEntry={true}
+              secureTextEntry={false}
               underlineColorAndroid="#f000"
               returnKeyType="next"
+              autoComplete="tel-national"
             />
           </View>
 

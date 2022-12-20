@@ -14,8 +14,6 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {SafeAreaView, View} from 'react-native';
-
 const Stack = createNativeStackNavigator();
 const Auth = () => {
   return (

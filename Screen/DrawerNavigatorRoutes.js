@@ -20,7 +20,13 @@ function Logout({navigation}) {
       });
   };
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#307ecc',
+      }}>
       <TouchableOpacity
         style={styles.buttonStyle}
         activeOpacity={0.5}

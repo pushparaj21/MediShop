@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, Image, View, StyleSheet, ActivityIndicator} from 'react-native';
+import {Image, View, StyleSheet, ActivityIndicator} from 'react-native';
 import {FlipInEasyX} from 'react-native-reanimated';
 import {auth} from '../firebase/firebase-config';
 
